@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 fastapi = "*"
 mongoengine = "*"
+uvicorn = "*"
+pillow = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pylint = "*"
