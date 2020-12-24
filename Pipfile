@@ -4,12 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Flask = "*"
-Flask-PyMongo = "*"
-pymodm = "*"
-pillow = "*"
+uvicorn = "*"
+fastapi = "*"
+python-dotenv = "*"
+motor = "*"
+dnspython = "*"
 
 [dev-packages]
+pylint = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.8"
