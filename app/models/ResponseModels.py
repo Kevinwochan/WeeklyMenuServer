@@ -1,6 +1,12 @@
-from mongoengine import *
+'''
+Object Document Model (ODM) using PyMODM 
 
+PyMODM defines the structure from the database
+'''
+from typing import List
+from pydantic import Field, BaseModel
 
+'''
 class Ingredient():
     name = StringField()
     units = StringField()
@@ -12,7 +18,7 @@ class Instruction(EmbeddedDocument):
     description = StringField()
     thumbnail = ImageField()
 
-class Recipe(Document):
+class Recipes(Document):
     title = StringField()
     description = StringField()
     thumbnail = ImageField()
@@ -25,9 +31,17 @@ class Recipe(Document):
     tags = ListField(field=StringField)
     utensils = ListField(field=StringField)
     reviews = ListField()
-
-
-class WeeklyMenu(Document):
     week = IntField()
-    year = IntField()
-    recipes = ListField(field=ReferenceField(Recipe))
+'''
+'''
+Wrapper classes to allow parsing Object IDs
+'''
+
+
+class Recipe(BaseModel):
+    title: str = Field()
+
+
+class MenuResponse(BaseModel):
+    WeekYear: str = Field(alias='_id')
+    recipes: List = []
