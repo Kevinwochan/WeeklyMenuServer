@@ -1,73 +1,56 @@
 import os
+import asyncio
 from typing import List
-from json import dumps
-from flask import Flask, request, jsonify, Response
-from pymodm import connect
-
-from DBModels import Menus
-from ResponseModels import *
-
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
+from app.db.mongodb import MongoDB
+from app.crud.RecipeRepository import RecipeRepository
+from app.crud.MenuRepository import MenuRepository
+from app.Models import WeeklyMenu
 '''
 Iniitalise the API app
 '''
-app = Flask(__name__)
+app = FastAPI()
 
 
-def defaultHandler(err):
-    response = err.get_response()
-    print('response', err, err.get_response())
-    response.data = dumps({
-        "code": err.code,
-        "name": "System Error",
-        "message": err.get_description(),
-    })
-    response.content_type = 'application/json'
-    return response
-
-
-app.config['TRAP_HTTP_EXCEPTIONS'] = True
-app.register_error_handler(Exception, defaultHandler)
-
-
-@app.before_first_request
-def connect_to_db():
-    connect('mongodb+srv://MONGOPWD:MONGOPWD@cluster0.rhkkj.mongodb.net/HelloFresh?retryWrites=true&w=majority')
-
-
-@app.route("/menu/add", methods=['POST'])
-def create_menu():
+@app.on_event("startup")
+def startup():
     '''
-    Creates a new menu
+    Prepare database access
     '''
-    week = int(request.form['week'])
-    year = int(request.form['year'])
-    recipes = []
-    if 'recipes' in request.form:
-        recipes = list(request.form['recipes'].split(','))
-    Menus(WeekYear=f'W{week}-{year}', recipes=recipes).save()
-    return jsonify({'success': True})
+    MongoDB.connect()
 
 
-@app.route("/menu/<string:week_year>", methods=['GET'])
-def read_menu(week_year):
+@app.on_event("shutdown")
+def shutdown():
+    '''
+    Clean up application state before shutdown
+    '''
+    MongoDB.disconnect()
+
+
+'''
+Routes
+'''
+
+
+@app.get("/")
+async def root():
+    return ''
+
+
+@app.get("/menu/", response_model=WeeklyMenu)
+async def read_menu(year: int, week: int):
     '''
     Path to fetch the menu for a certain week
     '''
-    try:
-        menu_document = Menus.objects.get({"_id": week_year})
-    except Exception:
-        raise ValueError('Invalid week or year, format is W<WEEK>-<YEAR> e.g W1-2020')
-
-    menu_dict = menu_document.to_son().to_dict()
-    menu_json = MenuResponse(**menu_dict).json()
-    return Response(response=menu_json, content_type="application/json")
-
-
-
-@app.route("/recipe/add", methods=['POST'])
-def create_recipe():
-    try:
-        Recipes().save()
-    except Exception:
-        raise ValueError('Invalid week or year')
-    return jsonify({'success': True})
+    weekly_menu = await MenuRepository.read_menu_by_year_week(MongoDB.get_collection('HelloFresh', 'Menus'), year, week)
+    recipe_queries = []
+    for recipe_id in weekly_menu['recipes']:
+        query = RecipeRepository.read_recipe_by_id(MongoDB.get_collection, recipe_id)
+        recipe_queries.append(query)
+    recipe_documents = await asyncio.gather(*recipe_queries)
+    print('===')
+    print(recipe_documents)        
+    return JSONResponse(content=jsonable_encoder(WeeklyMenu(recipes=[])))
