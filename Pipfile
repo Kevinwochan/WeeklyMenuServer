@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 motor = "*"
 fastapi = "*"
+uvicorn = "*"
+dnspython = "*"
 
 [dev-packages]
 
