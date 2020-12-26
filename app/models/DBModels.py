@@ -8,13 +8,6 @@ from pydantic import BaseConfig, BaseModel, Field
 from pydantic.dataclasses import dataclass
 from pydantic import Extra
 
-class MongoConfig(BaseConfig):
-    allow_population_by_field_name = True
-    fields = {'id': '_id'}
-    json_encoders = {
-        ObjectId: lambda id: str(id)
-    }
-
 class MongoId(ObjectId):
     '''
     A wrapper to allow validation of ObjectIds

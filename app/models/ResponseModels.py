@@ -8,7 +8,6 @@ from pydantic.dataclasses import dataclass
 from bson import ObjectId, errors
 
 class RecipeResponse(BaseModel):
-    id: str
     title: str
     subtitle: str
     description: str

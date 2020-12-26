@@ -19,3 +19,12 @@ class RecipeRequest(BaseModel):
     tags: List[str] = []
     instructions: List[Instruction] = []
     ingredients: List[Ingredient] = []
+
+class RecipeUpdateRequest(BaseModel):
+    id: str
+    title: str
+    subtitle: str = ''
+    description: str = ''
+    tags: List[str] = []
+    instructions: List[Instruction] = []
+    ingredients: List[Ingredient] = []
