@@ -19,12 +19,9 @@ class RecipeRepository():
 
     @staticmethod
     async def read_recipe_by_id(recipe_collection, recipe_id) -> RecipeDB:
-        recipe_document = await recipe_collection.find_one({"_id": ObjectId(recipe_id)}, limit=30)
+        recipe_document = await recipe_collection.find_one({"_id": ObjectId(recipe_id)})
         if recipe_document is None:
             raise ValueError('Invalid Recipe ID')
-        print('='*30)
-        print(recipe_document)      
-        print('='*30)  
         return RecipeDB(**recipe_document)
 
     def update_recipe(self):

@@ -40,19 +40,19 @@ def shutdown():
 Routes
 '''
 
-@app.post("/recipe/add", response_model=ResponseModels.ResponseSave)
+@app.post("/recipe/add", response_model=ResponseModels.SaveResponse)
 async def create_recipe(recipe: RequestModels.RecipeRequest):
     '''
     Path to fetch the menu for a certain week
     '''
     try:
-        new_recipe_id = await RecipeRepository.create_recipe(MongoDB.get_collection('HelloFresh', 'Recipes'), recipe)
+        new_recipe_id = RecipeRepository.create_recipe(MongoDB.get_collection('HelloFresh', 'Recipes'), recipe)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    return ResponseModels.ResponseSave(success=True, message='', id=new_recipe_id)
+    return ResponseModels.SaveResponse(success=True, message='', id=await new_recipe_id)
 
 
-@app.get("/recipe/", response_model=ResponseModels.ResponseRecipe)
+@app.get("/recipe/", response_model=ResponseModels.RecipeResponse)
 async def get_recipe(recipe_id: str):
     '''
     Path to fetch the menu for a certain week
@@ -61,5 +61,5 @@ async def get_recipe(recipe_id: str):
         recipe_doc = RecipeRepository.read_recipe_by_id(MongoDB.get_collection('HelloFresh', 'Recipes'), recipe_id)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-    return ResponseModels.RecipeResponse(await recipe_doc)
+    return ResponseModels.RecipeResponse(**dict(await recipe_doc))
     

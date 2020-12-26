@@ -6,13 +6,10 @@ from datetime import datetime
 from pydantic import BaseConfig, BaseModel, Field
 from bson import ObjectId, errors
 
-class ResponseRecipe(BaseModel):
+class RecipeResponse(BaseModel):
     title: str
 
-class ResponseSave(BaseModel):
+class SaveResponse(BaseModel):
     success: bool
     message: str
     id: str
-
-class Error(BaseModel):
-    message: str
