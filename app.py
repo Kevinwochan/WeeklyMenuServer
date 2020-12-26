@@ -31,7 +31,7 @@ app.register_error_handler(Exception, defaultHandler)
 
 @app.before_first_request
 def connect_to_db():
-    connect('mongodb+srv://MONGOPWD:MONGOPWD@cluster0.rhkkj.mongodb.net/HelloFresh?retryWrites=true&w=majority')
+    connect(f'mongodb+srv://{os.getenv('MONG0_USER')}:{os.getenv('MONGO_PASSWORD')}@cluster0.rhkkj.mongodb.net/HelloFresh?retryWrites=true&w=majority')
 
 
 @app.route("/menu/add", methods=['POST'])
