@@ -78,7 +78,6 @@ async def update_recipe(recipe: RequestModels.RecipeUpdateRequest):
     '''
     try:
         recipe_id = RecipeRepository.update_recipe(recipe)
-    except ValueError as e:
+        return ResponseModels.SaveResponse(success=True, message='', id=await recipe_id)
+    except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    # Map to client friendly structure
-    return ResponseModels.SaveResponse(success=True, message='', id=await recipe_id)

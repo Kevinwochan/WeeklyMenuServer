@@ -1,7 +1,7 @@
 from typing import List
 from bson.objectid import ObjectId
 from app.db.mongodb import MongoDB
-from app.models.RequestModels import RecipeRequest
+from app.models.RequestModels import RecipeRequest, RecipeUpdateRequest
 from app.models.DBModels import RecipeDB
 
 class RecipeRepository():
@@ -26,17 +26,15 @@ class RecipeRepository():
         return RecipeDB.parse_obj(recipe_document)
 
     @staticmethod
-    async def update_recipe(new_recipe: RecipeRequest) -> str:
+    async def update_recipe(new_recipe: RecipeUpdateRequest) -> str:
         recipe_collection = MongoDB.get_collection('HelloFresh', 'Recipes')
-        recipe_doc = new_recipe.dict(exclude={'_id'}, by_alias=True)
-        print('='*100)
-        print(recipe_doc)
+        recipe_doc = new_recipe.dict(exclude={'_id', 'id'}, by_alias=True)
         result = await recipe_collection.replace_one({"_id": ObjectId(new_recipe.id)}, recipe_doc)
         if not result.acknowledged:
             raise Exception('Database did not acknowledge') # TODO:  define custom exception
-        elif result.upsert_id is None:
+        elif result.modified_count != 1:
             raise Exception('Document was not updated')
-        return str(result.upsert_id)
+        return new_recipe.id
 
 
     def delete_recipe(self, recipe):
