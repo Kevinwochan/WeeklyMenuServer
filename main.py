@@ -55,11 +55,11 @@ async def create_recipe(recipe: RequestModels.RecipeRequest):
 @app.get("/recipe/", response_model=ResponseModels.RecipeResponse)
 async def get_recipe(recipe_id: str):
     '''
-    Path to fetch the menu for a certain week
+    Path to fetch a recipe specified by id
     '''
     try:
         recipe_doc = RecipeRepository.read_recipe_by_id(MongoDB.get_collection('HelloFresh', 'Recipes'), recipe_id)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-    return ResponseModels.RecipeResponse(**dict(await recipe_doc))
+    return ResponseModels.RecipeResponse.parse_obj((await recipe_doc).dict())
     

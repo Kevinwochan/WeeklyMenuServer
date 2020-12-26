@@ -22,7 +22,8 @@ class RecipeRepository():
         recipe_document = await recipe_collection.find_one({"_id": ObjectId(recipe_id)})
         if recipe_document is None:
             raise ValueError('Invalid Recipe ID')
-        return RecipeDB(**recipe_document)
+        print(recipe_document)
+        return RecipeDB.parse_obj(recipe_document)
 
     def update_recipe(self):
         pass
