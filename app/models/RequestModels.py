@@ -20,6 +20,3 @@ class RecipeRequest(BaseModel):
     instructions: List[Instruction] = []
     ingredients: List[Ingredient] = []
 
-class RecipeUpdateRequest(RecipeRequest):
-    id: str
-

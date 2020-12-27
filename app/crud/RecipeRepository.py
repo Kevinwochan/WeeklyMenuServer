@@ -1,7 +1,7 @@
 from typing import List
 from bson.objectid import ObjectId
 from app.db.mongodb import MongoDB
-from app.models.RequestModels import RecipeRequest, RecipeUpdateRequest
+from app.models.RequestModels import RecipeRequest
 from app.models.DBModels import RecipeDB
 
 
@@ -27,22 +27,22 @@ class RecipeRepository():
         return RecipeDB.parse_obj(recipe_document)
 
     @classmethod
-    async def update_recipe(cls, new_recipe: RecipeUpdateRequest) -> str:
-        recipe_doc = new_recipe.dict(exclude={'_id', 'id'}, by_alias=True)
-        result = await cls.recipe_collection.replace_one({"_id": ObjectId(new_recipe.id)}, recipe_doc)
+    async def update_recipe(cls, recipe_id: str, new_recipe: RecipeRequest) -> str:
+        recipe_doc = new_recipe.dict(exclude={'_id', 'id'}, by_alias=True) 
+        result = await cls.recipe_collection.replace_one({"_id": ObjectId(recipe_id)}, recipe_doc)
         if not result.acknowledged:
             # TODO:  define custom exception
             raise Exception('Database did not acknowledge')
         elif result.modified_count != 1:
             raise Exception('Document was not updated')
-        return new_recipe.id
+        return recipe_id
 
     @classmethod
     async def delete_recipe(cls, recipe_id: str):
-        result = await cls.recipe_collection.delete_one({"_id": ObjectId(new_recipe.id)})
+        result = await cls.recipe_collection.delete_one({"_id": ObjectId(recipe_id)})
         if not result.acknowledged:
             # TODO:  define custom exception
             raise Exception('Database did not acknowledge')
-        elif result.delete_count != 1:
+        elif result.deleted_count != 1:
             raise Exception('Document was not deleted')
         return
