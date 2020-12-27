@@ -73,7 +73,7 @@ async def update_recipe(recipe: RequestModels.RecipeUpdateRequest):
         recipe_id = await RecipeRepository.update_recipe(recipe)
         return ResponseModels.SaveResponse(success=True, message='', id=recipe_id)
     except Exception as e:
-        return ResponseModels.SaveResponse(success=False, message=str(e), id=None)
+        return ResponseModels.SaveResponse(success=False, message=str(e), id='')
 
 @app.delete("/recipe/delete", response_model=ResponseModels.SaveResponse)
 async def delete_recipe(recipe_id: str):
@@ -82,6 +82,6 @@ async def delete_recipe(recipe_id: str):
     '''
     try:
         recipe_id = await RecipeRepository.delete_recipe(recipe_id)
-        return ResponseModels.SaveResponse(success=True, message='', id=None)
+        return ResponseModels.SaveResponse(success=True, message='', id='')
     except Exception as e:
-        return ResponseModels.SaveResponse(success=False, message=str(e), id=None)
+        return ResponseModels.SaveResponse(success=False, message=str(e), id='')
