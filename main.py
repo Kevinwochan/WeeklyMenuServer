@@ -50,7 +50,7 @@ async def create_recipe(recipe: RequestModels.RecipeRequest):
     try:
         new_recipe_id = RecipeRepository.create_recipe(recipe)
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return ResponseModels.SaveResponse(success=False, message=str(e), id=None)
     return ResponseModels.SaveResponse(success=True, message='', id=await new_recipe_id)
 
 
@@ -80,4 +80,4 @@ async def update_recipe(recipe: RequestModels.RecipeUpdateRequest):
         recipe_id = RecipeRepository.update_recipe(recipe)
         return ResponseModels.SaveResponse(success=True, message='', id=await recipe_id)
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return ResponseModels.SaveResponse(success=False, message=str(e), id=None)
