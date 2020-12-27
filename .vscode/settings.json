@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/bin/python3",
+    "python.pythonPath": "/home/ubuntu/.local/share/virtualenvs/WeeklyMenuServer-ZY3VvN3g/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
 }

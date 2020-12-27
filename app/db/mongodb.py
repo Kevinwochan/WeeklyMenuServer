@@ -1,5 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorCollection
-from src.Singleton import Singleton
+from utils.Singleton import Singleton
 
 
 class MongoDB(Singleton):
@@ -16,11 +16,13 @@ class MongoDB(Singleton):
 
     @classmethod
     def get_client(cls) -> AsyncIOMotorClient:
+        if cls.client is None:
+            cls.connect()
         return cls.client
 
     @classmethod
     def get_database(cls, db_name: str) -> AsyncIOMotorDatabase:
-        return cls.client.get_database(name=db_name)
+        return cls.get_client().get_database(name=db_name)
 
     @classmethod
     def get_collection(cls, db_name: str, collection_name: str) -> AsyncIOMotorCollection:
