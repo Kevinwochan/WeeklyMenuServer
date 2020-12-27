@@ -1,0 +1,573 @@
+{
+	"info": {
+		"_postman_id": "7fc16ed7-b91a-4c3e-9a18-c5f7182c763e",
+		"name": "HelloFresh API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Menu",
+			"item": [
+				{
+					"name": "Read",
+					"item": [
+						{
+							"name": "Read a menu using week and year combination",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Menus show up\", () => {",
+											"    const menu = pm.reponse.json();",
+											"    pm.expect(menu.recipes[0]).to.eql({});",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "week",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "year",
+											"value": "2020",
+											"type": "text"
+										},
+										{
+											"key": "recipes",
+											"value": "5fe48bbee2a3aa7137a124e2,5fe1df52b50f9d0a192facf3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5000/menu/W1-2020",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"menu",
+										"W1-2020"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create",
+					"item": [
+						{
+							"name": "Create a new weekly menu",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "week",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "year",
+											"value": "2020",
+											"type": "text"
+										},
+										{
+											"key": "recipes",
+											"value": "5fe48bbee2a3aa7137a124e2,5fe1df52b50f9d0a192facf3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5000/menu/add",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"menu",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check newly added menu exists",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "week",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "year",
+											"value": "2020",
+											"type": "text"
+										},
+										{
+											"key": "recipes",
+											"value": "5fe48bbee2a3aa7137a124e2,5fe1df52b50f9d0a192facf3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:5000/menu/add",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"menu",
+										"add"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Recipes",
+			"item": [
+				{
+					"name": "Read",
+					"item": [
+						{
+							"name": "Read recipe by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify response meta\", () => {",
+											"    pm.response.to.not.be.error;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Verify the recipe has the expected data\", () => {",
+											"    pm.expect(pm.response.json()).eq(JSON.parse(pm.collectionVariables.get(\"valid_recipe_json\")));",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/recipe/?recipe_id={{valid_recipe_id}}",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"recipe",
+										""
+									],
+									"query": [
+										{
+											"key": "recipe_id",
+											"value": "{{valid_recipe_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create",
+					"item": [
+						{
+							"name": "Create Recipe",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify response meta\", () => {",
+											"    pm.response.to.not.be.error;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Verify response structure\", () => {",
+											"    pm.expect(pm.response).to.have.property('sucess');",
+											"    pm.expect(pm.response).to.have.property('message');",
+											"    pm.expect(pm.response).to.have.property('id');",
+											"});",
+											"",
+											"pm.test(\"Verify response contents\", () => {",
+											"    pm.expect(pm.response.success).eql(True);",
+											"    pm.expect(pm.response.message).not.empty();",
+											"    pm.expect(pm.response.id).not.empty();",
+											"    pm.collectionVariables.set(\"new_recipe_id\", response.id)",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{{valid_recipe_json}}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/recipe/add",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"recipe",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify new recipe is in db",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify response meta\", () => {",
+											"    pm.response.to.not.be.error;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Verify the new recipe is in the db\", () => {",
+											"    pm.expect(pm.response.json()).eq(JSON.parse(pm.collectionVariables.get(\"valid_recipe_json\")));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/recipe/?recipe_id={{new_recipe_id}}",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"recipe",
+										""
+									],
+									"query": [
+										{
+											"key": "recipe_id",
+											"value": "{{new_recipe_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "Update an existing recipe",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let new_recipe = JSON.parse(pm.collectionVariables.get(\"valid_recipe_json\")); // use the valid recipe data",
+											"new_recipe.id = pm.collectionVariables.get(\"new_recipe_id\"); // update the recipe created from the create test",
+											"new_recipe.title = \"Portuguese-Style Beef\"; //",
+											"pm.collectionVariables.set(\"updated_recipe_json\", JSON.stringify(new_recipe)); // store the changed recipe as a collection variable"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify response meta\", () => {",
+											"    pm.response.to.not.be.error;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Verify recipe has been update\", () => {",
+											"    pm.expect(pm.response.json().eq(JSON.parse(pm.collectionVariables.get(\"updated_recipe_json\"))));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{{updated_recipe_json}}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/recipe/update",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"recipe",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"item": [
+						{
+							"name": "Delete a recipe",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify response meta\", () => {",
+											"    pm.response.to.not.be.error;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Verify response data\", () => {",
+											"    pm.expect(pm.response.json().eq(true));",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/recipe/delete?recipe_id={{new_recipe_id}}",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"recipe",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "recipe_id",
+											"value": "{{new_recipe_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify  recipe is no longer accessible",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify response meta\", () => {",
+											"    pm.response.to.be.error;",
+											"    pm.response.to.be.json;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/recipe/?recipe_id={{new_recipe_id}}",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"recipe",
+										""
+									],
+									"query": [
+										{
+											"key": "recipe_id",
+											"value": "{{new_recipe_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "new_recipe_id",
+			"value": "5fe728f4d06cc7fb1a708caa"
+		},
+		{
+			"key": "valid_recipe_id",
+			"value": "5fe728f4d06cc7fb1a708caa"
+		},
+		{
+			"key": "valid_recipe_json",
+			"value": "{\"id\":\"5fe744a04d685d341ce08e62\",\"title\":\"Portuguese-Style Chicken\",\"subtitle\":\"with Potato Wedges & Garden Salad\",\"description\":\"We've put all the much-loved family flavours into this delectable dinner - from the Aussie spiced chicken to the lemony crushed potatoes, it's got everything we're all addicted to!\",\"tags\":[],\"instructions\":[],\"ingredients\":[],\"id\":\"{\\\"_id\\\":{\\\"$oid\\\":\\\"5fe744a04d685d341ce08e62\\\"},\\\"title\\\":\\\"Portuguese-Style Chicken\\\",\\\"subtitle\\\":\\\"with Potato Wedges & Garden Salad\\\",\\\"description\\\":\\\"We've put all the much-loved family flavours into this delectable dinner - from the Aussie spiced chicken to the lemony crushed potatoes, it's got everything we're all addicted to!\\\",\\\"tags\\\":[],\\\"instructions\\\":[],\\\"ingredients\\\":[]}\"}"
+		},
+		{
+			"key": "updated_recipe_json",
+			"value": ""
+		}
+	]
+}
