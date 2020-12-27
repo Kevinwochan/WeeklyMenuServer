@@ -1,5 +1,5 @@
 '''
-Object Document Model (ODM) using Pydantic
+A model defining the structure of HTTP JSON requests
 '''
 from typing import List, Optional
 from pydantic import BaseModel, Field, BaseConfig

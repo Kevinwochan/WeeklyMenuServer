@@ -2,7 +2,10 @@
 Object Document Model (ODM) using Pydantic
 '''
 from typing import List
-from datetime import datetime
+'''
+A model defining the structure of HTTP JSON responses
+'''
+
 from pydantic import BaseConfig, BaseModel, Field
 from pydantic.dataclasses import dataclass
 from bson import ObjectId, errors
