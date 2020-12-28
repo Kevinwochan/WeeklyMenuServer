@@ -1,5 +1,5 @@
 # WeeklyMenuServer
-**NOTE:** For database credetials please contact me
+**NOTE:** For database credetials please contact me, credentials in version control are not valid
 
 ## Summary
 
