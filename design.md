@@ -1,16 +1,18 @@
-# NOTE: This project is largely incomplete
-I fell into a rabbit hole of trying to get an async API working with FastAPI and Motor (an async mongo client). Mongo's "_id" field and ObjectId type did not playing nice.
-
 # Installation
 Run `pipenv install` or `pip install -r requirements.txt` depending on your preference
 
 # Usage
-## Pipenv
+
+## Deployment
+### Pipenv
 After installing run `pipenv run flask run`
 This by default is launched in development mode due to the FLASK_ENV environment variable
 
-## Other
+### Other
 After installing run `flask run`
+
+## API Documentation
+After running the server, go to `http://127.0.0.1:8000/docs` for interactive documentation on the API's expected parameters and returns
 
 # API Architecture
 ## app
