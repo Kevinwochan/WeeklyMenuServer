@@ -1,4 +1,6 @@
 # WeeklyMenuServer
+**NOTE:** For database credetials please contact me
+
 ## Summary
 
 | Task                   | Progress         |
