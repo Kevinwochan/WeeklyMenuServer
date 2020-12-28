@@ -1,4 +1,3 @@
-import os
 import asyncio
 from bson import ObjectId
 from typing import List
