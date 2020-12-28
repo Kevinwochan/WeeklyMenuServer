@@ -1,6 +1,8 @@
 
-#! /usr/bin/env sh
+#! /usr/bin/env bash
 # https://raw.githubusercontent.com/tiangolo/uvicorn-gunicorn-docker/master/docker-images/start.sh
+
+source /.env
 
 set -e
 

@@ -8,6 +8,9 @@ motor = "*"
 fastapi = "*"
 uvicorn = "*"
 dnspython = "*"
+gunicorn = "*"
+uvloop = "*"
+httptools = "*"
 
 [dev-packages]
 autopep8 = "*"

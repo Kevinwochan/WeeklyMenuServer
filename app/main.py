@@ -5,10 +5,10 @@ from typing import List
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-from app.db.mongodb import MongoDB
-from app.crud.RecipeRepository import RecipeRepository
-from app.models.RequestModels import RecipeRequest
-from app.models.ResponseModels import SaveResponse, RecipeResponse
+from db.mongodb import MongoDB
+from crud.RecipeRepository import RecipeRepository
+from models.RequestModels import RecipeRequest
+from models.ResponseModels import SaveResponse, RecipeResponse
 
 
 '''

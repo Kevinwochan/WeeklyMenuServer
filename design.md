@@ -1,42 +1,27 @@
-# Installation
-Run `pipenv install` or `pip install -r requirements.txt` depending on your preference
-
-# Usage
-
-## Deployment
-### Pipenv
-After installing run `pipenv run flask run`
-This by default is launched in development mode due to the FLASK_ENV environment variable
-
-### Other
-After installing run `flask run`
-
-## API Documentation
-After running the server, go to `http://127.0.0.1:8000/docs` for interactive documentation on the API's expected parameters and returns
-
 # API Architecture
 ## app
 - This folder is supposed to contain most of the code.
 - By having the code all in this only config files and documentation would be at the top level
 
 ### models
-- There are two sets of models: DBModels.pu and ResponseModels.py
+- There are three sets of models: DBModels.py, ResponseModels.py, RequestModels.py
+- RequestModels define the expected JSON structure of requests
 - DBModels define the mapping from Mongo Documents to python data structures
 - ResponseModels define the JSON response structure
 
-
 ## data
-- This folder holds useful JSON data that may be useful for testing
+- This folder holds example JSON data that may be useful for testing
 
 ## scripts
 - This folder holds useful scripts to runs portions of this repo
 - 
 ---
-| script          | description                                                                                                                                      | progress    |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
-| deploy.sh       | this script was planned to pull a dockerfile and launch the API in a docker container                                                            | incomplete  |
-| develop.sh      | this script was planned to launch all the necessary programs for hot-loading                                                                      | in progress |
----
+| script                   | description                                 |
+| ------------------------ | ------------------------------------------- |
+| develop.sh               | Hotload the API                             |
+| build.sh                 | Builds the docker container                 |
+| run.sh                   | runs the docker container                   |
+| generate_requirements.sh | generates a requirements.txt for the docker |
 
 ## Considerations
 ### Repository Design Pattern

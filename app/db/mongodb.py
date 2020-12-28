@@ -1,5 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorCollection
-from app.utils.Singleton import Singleton
+from utils.Singleton import Singleton
 
 
 class MongoDB(Singleton):

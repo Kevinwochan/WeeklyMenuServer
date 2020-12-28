@@ -1,5 +1,5 @@
 from typing import List
-from app.crud.RecipeRepository import RecipeRepository
+from crud.RecipeRepository import RecipeRepository
 
 
 class MenuRepository():

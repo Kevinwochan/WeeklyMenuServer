@@ -1,8 +1,8 @@
 from typing import List
 from bson.objectid import ObjectId
-from app.db.mongodb import MongoDB
-from app.models.RequestModels import RecipeRequest
-from app.models.DBModels import RecipeDB
+from db.mongodb import MongoDB
+from models.RequestModels import RecipeRequest
+from models.DBModels import RecipeDB
 
 
 class RecipeRepository():

@@ -1,4 +1,31 @@
 # WeeklyMenuServer
+## Summary
+
+| Task                   | Progress         |
+| ---------------------- | ---------------- |
+| Recipe Model           | Completed        |
+| Review Model           | Incomplete       |
+| Weekly Menu Model      | Incomplete       |
+| Ingredients Menu Model | Incomplete       |
+| User Authentication    | Incomplete       |
+| Unit Testing           | Incomplete       |
+| E2E Testing            | Only for recipes |
+| Docker                 | Completed        |
+
+## Development
+### Installation
+Run `pipenv install --dev` depending on your preference
+
+### Usage
+To start the API server run the script `pipenv run sh scripts/develop.sh`
+
+Documentation of the API should now be available at `http://127.0.0.1:8000/docs`
+
+A valid recipe can be viewed at `http://127.0.0.1/recipe/5fe749674d685d341ce08e63`
+
+## Deployment
+## API Documentation
+After running the server, go to  for interactive documentation on the API's expected parameters and returns
 
 ## Problem Statement
 A menu planning API which allows management of the weekly menu and associated recipies. 
