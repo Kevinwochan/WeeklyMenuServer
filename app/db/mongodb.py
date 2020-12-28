@@ -1,3 +1,4 @@
+import os
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorCollection
 from utils.Singleton import Singleton
 
@@ -8,7 +9,7 @@ class MongoDB(Singleton):
     @classmethod
     def connect(cls):
         cls.client = AsyncIOMotorClient(
-            'mongodb+srv://MONGOPWD:MONGOPWD@cluster0.rhkkj.mongodb.net/HelloFresh?retryWrites=true&w=majority')
+            f'mongodb+srv://{os.getenv("MONGO_USER")}:{os.getenv("MONOG_PASSWORD")}@cluster0.rhkkj.mongodb.net/HelloFresh?retryWrites=true&w=majority')
 
     @classmethod
     def disconnect(cls):
