@@ -10,9 +10,6 @@ from app.crud.RecipeRepository import RecipeRepository
 from app.models.RequestModels import RecipeRequest
 from app.models.ResponseModels import SaveResponse, RecipeResponse
 
-import sys
-sys.path.insert(0,'/home/ubuntu/WeeklyMenuServer')
-
 
 '''
 Iniitalise the API app
