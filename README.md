@@ -1,6 +1,8 @@
 # WeeklyMenuServer
 **NOTE:** For database credetials please contact me, credentials in version control are not valid
+
 Don't worry about credentials. I spent my spare time leading up to Christmas trying to complete this technical test. Only for my interviewers to not look at this.
+
 I appreciate you doing your research by looking at this repo. Please contact me. I want to work with people who enjoy and put effort into their work.
 
 ## Summary
